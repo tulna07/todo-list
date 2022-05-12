@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <!-- Axios -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+      integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer
+    ></script>
+
+    <!-- Main JS -->
+    <script src="js/main.js" type="module"></script>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="card__header">
+        <img src="./img/X2oObC4.png" />
+      </div>
+      <!-- <h2>hello!</h2> -->
+      <div class="card__body">
+        <div class="filter-btn">
+          <a id="one" href="#"><i class="fa fa-check-circle"></i></a>
+          <a id="two" href="#"><i class="fa fa-sort-alpha-down"></i></a>
+          <a id="three" href="#"><i class="fa fa-sort-alpha-up"></i></a>
+          <a id="all" href="#"><i class="fa fa-clock"></i></a>
+          <span class="toggle-btn">
+            <i class="fa fa-filter"></i>
+            <i class="fa fa-times"></i>
+          </span>
+        </div>
+        <div class="card__content">
+          <div class="card__title">
+            <h2>My Tasks</h2>
+            <p>September 9,2020</p>
+          </div>
+          <div class="card__add">
+            <input
+              id="newTask"
+              type="text"
+              placeholder="Enter an activity..."
+            />
+            <button id="addItem">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+          <div class="card__todo">
+            <!-- Uncompleted tasks -->
+            <ul class="todo" id="todo"></ul>
+            <!-- Completed tasks -->
+            <ul class="todo" id="completed"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      $(function () {
+        $(".toggle-btn").click(function () {
+          $(".filter-btn").toggleClass("open");
+        });
+
+        $(".filter-btn a").click(function () {
+          $(".filter-btn").removeClass("open");
+        });
+      });
+    </script>
+  </body>
+</html>
