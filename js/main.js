@@ -54,40 +54,66 @@ const renderHTML = data => {
 };
 window.renderHTML = renderHTML;
 
-const getTaskList = () =>
-  services
-    .fetchData()
-    .then(response => renderHTML(response.data))
-    .catch(err => {
-      console.log(err);
-      renderHTML([]);
-    });
+const getTaskList = async (
+  { sort, ascending } = { sort: false, ascending: false }
+) => {
+  try {
+    const response = await services.fetchData();
+    const tasks = response.data;
+    if (sort) {
+      tasks.sort((a, b) => a["content"].localeCompare(b["content"]));
+      if (!ascending) tasks.reverse();
+    }
+
+    renderHTML(tasks);
+  } catch (err) {
+    console.log(err);
+    renderHTML([]);
+  }
+};
 window.getTaskList = getTaskList;
 getTaskList();
 
-const deleteTask = id =>
-  services
-    .deleteData(id)
-    .then(() => getTaskList())
-    .catch(err => console.log(err));
+const deleteTask = async id => {
+  try {
+    await services.deleteData(id);
+  } catch (err) {
+    console.log(err);
+  }
+
+  getTaskList();
+};
 window.deleteTask = deleteTask;
 
-getElem("addItem").addEventListener("click", () => {
+getElem("addItem").addEventListener("click", async () => {
   const taskContent = getElem("newTask").value;
   const task = new Task(taskContent);
-  services
-    .addData(task)
-    .then(() => {
-      getTaskList();
-      getElem("newTask").value = "";
-    })
-    .catch(err => console.log(err));
+
+  try {
+    await services.addData(task);
+  } catch (err) {
+    console.log(err);
+  }
+
+  getTaskList();
+  getElem("newTask").value = "";
 });
 
-const updateTaskStatus = (id, content) => {
-  services
-    .updateData(id, { content, isCompleted: true })
-    .then(() => getTaskList())
-    .catch(err => console.log(err));
+const updateTaskStatus = async (id, content) => {
+  try {
+    await services.updateData(id, { content, isCompleted: true });
+  } catch (err) {
+    console.log(err);
+  }
+
+  getTaskList();
 };
 window.updateTaskStatus = updateTaskStatus;
+
+getElem("two").addEventListener("click", () => {
+  getTaskList({ sort: true, ascending: true });
+});
+
+getElem("three").addEventListener("click", () => {
+  getTaskList({ sort: true, ascending: false });
+});
